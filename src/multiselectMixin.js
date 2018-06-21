@@ -317,6 +317,15 @@ export default {
       default: false
     },
     /**
+     * Opens dropdown on focus
+     * @default true
+     * @type {Boolean}
+    */
+    openOnFocus: {
+      type: Boolean,
+      default: true
+    },
+    /**
      * Allow selecting items using alpha-numeric keys on keyboard
      * @default false
      * @type {Boolean}
@@ -649,7 +658,7 @@ export default {
      * Opens the multiselect’s dropdown.
      * Sets this.isOpen to TRUE
      */
-    activate () {
+    activate (forceOpen = false) {
       /* istanbul ignore else */
       if (this.isOpen || this.disabled) return
 
@@ -659,7 +668,7 @@ export default {
         this.pointer = 1
       }
 
-      this.isOpen = true
+      if (this.openOnFocus || forceOpen) this.isOpen = true
       /* istanbul ignore else  */
       if (this.searchable) {
         if (!this.preserveSearch) this.search = ''
@@ -667,7 +676,7 @@ export default {
       } else {
         this.$el.focus()
       }
-      this.$emit('open', this.id)
+      if (this.openOnFocus || forceOpen) this.$emit('open', this.id)
     },
     /**
      * Closes the multiselect’s dropdown.
@@ -697,7 +706,7 @@ export default {
     toggle () {
       this.isOpen
         ? this.deactivate()
-        : this.activate()
+        : this.activate(true)
     },
     /**
      * Updates the hasEnoughSpace variable used for
