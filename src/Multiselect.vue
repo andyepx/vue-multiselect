@@ -9,6 +9,7 @@
     @keydown.enter.tab.stop.self="addPointerElement($event)"
     @keyup.esc="deactivate()"
     @keydown="alphanumSelectItem($event)"
+    :id="searchable ? '' : id"
     class="multiselect">
       <slot name="caret" :toggle="toggle">
         <div @mousedown.prevent.stop="toggle()" class="multiselect__select"></div>
