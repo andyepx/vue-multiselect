@@ -350,6 +350,13 @@ export default {
     ) {
       this.select(this.filteredOptions[0])
     }
+
+    this.$root.$on('multiselectSelectWithKeyboard', (data) => {
+      if (this.id === data.id) {
+        const keyIndex = this.filteredOptions.findIndex((x, i) => x[this.label].toLowerCase().indexOf(data.key.toLowerCase()) === 0)
+        this.select(this.filteredOptions[keyIndex])
+      }
+    })
   },
   computed: {
     internalValue () {
