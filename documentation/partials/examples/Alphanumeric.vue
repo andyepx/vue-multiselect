@@ -31,10 +31,11 @@ export default {
       value: null,
       options: [
         { name: 'Vue.js', language: 'JavaScript' },
-        { name: '3. Rails', language: 'Ruby' },
+        { name: '1. Rails', language: 'Ruby' },
         { name: 'Sinatra', language: 'Ruby' },
         { name: '6. Laravel', language: 'PHP' },
-        { name: 'Phoenix', language: 'Elixir' }
+        { name: 'Phoenix', language: 'Elixir' },
+        { name: '12. React', language: 'JavaScript' }
       ]
     }
   }

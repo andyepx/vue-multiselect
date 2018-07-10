@@ -67,7 +67,9 @@ export default {
       search: '',
       isOpen: false,
       prefferedOpenDirection: 'below',
-      optimizedHeight: this.maxHeight
+      optimizedHeight: this.maxHeight,
+      pressedKeys: [],
+      lastKeyTimeout: 0
     }
   },
   props: {
@@ -614,10 +616,18 @@ export default {
         const alphanum = new RegExp('^[a-zA-Z0-9]+$')
         const key = String.fromCharCode(!event.charCode ? event.which : event.charCode)
         if (alphanum.test(key)) {
+          this.pressedKeys.push(key)
           event.preventDefault()
           event.stopPropagation()
-          const keyIndex = this.filteredOptions.findIndex((x, i) => x[this.label].toLowerCase().indexOf(key.toLowerCase()) === 0)
-          this.select(this.filteredOptions[keyIndex])
+          clearTimeout(this.lastKeyTimeout)
+          this.lastKeyTimeout = setTimeout(() => {
+            clearTimeout(this.lastKeyTimeout)
+            const keyIndex = this.filteredOptions.findIndex((x, i) => {
+              return x[this.label].toLowerCase().indexOf(this.pressedKeys.join('').toLowerCase()) === 0
+            })
+            this.select(this.filteredOptions[keyIndex])
+            this.pressedKeys = []
+          }, 170)
         }
       }
     },
