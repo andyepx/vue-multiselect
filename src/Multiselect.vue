@@ -90,6 +90,11 @@
               </span>
             </li>
             <template v-if="!max || internalValue.length < max">
+              <li class="multiselect__element clear-button" v-if="showClearButton">
+                <span class="multiselect__option" style="text-align: right;">
+                  <button @click.prevent.stop="clearCurrentSelection()">{{clearButtonLabel}}</button>
+                </span>
+              </li>
               <li class="multiselect__element" v-for="(option, index) of filteredOptions" :key="index">
                 <span
                   v-if="!(option && (option.$isLabel || option.$isDisabled))"
@@ -279,6 +284,14 @@
       tabindex: {
         type: Number,
         default: 0
+      },
+      showClearButton: {
+        type: Boolean,
+        default: false
+      },
+      clearButtonLabel: {
+        type: String,
+        default: 'Clear'
       }
     },
     computed: {

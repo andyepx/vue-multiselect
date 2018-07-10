@@ -552,6 +552,12 @@ export default {
       if (this.closeOnSelect) this.deactivate()
     },
     /**
+     * Clear currently selected item
+     */
+    clearCurrentSelection () {
+      this.valueKeys.forEach(x => this.removeElement(x))
+    },
+    /**
      * Add the given group options to the list of selected options
      * If all group optiona are already selected -> remove it from the results.
      *

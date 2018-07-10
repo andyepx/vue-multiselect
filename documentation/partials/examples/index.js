@@ -10,6 +10,7 @@ import CustomConfig from './CustomConfig'
 import Groups from './Groups'
 import ActionDispatcher from './ActionDispatcher'
 import Alphanumeric from './Alphanumeric'
+import ClearSelectionButton from './ClearSelectionButton'
 
 export {
   SingleSelectPrimitive,
@@ -23,5 +24,6 @@ export {
   CustomConfig,
   Groups,
   ActionDispatcher,
-  Alphanumeric
+  Alphanumeric,
+  ClearSelectionButton,
 }
