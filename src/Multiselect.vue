@@ -12,7 +12,7 @@
     :id="searchable ? '' : id"
     class="multiselect">
       <slot name="caret" :toggle="toggle">
-        <div @mousedown.prevent.stop="toggle()" class="multiselect__select"></div>
+        <div @mousedown.prevent.stop="toggle" class="multiselect__select"></div>
       </slot>
       <slot name="clear" :search="search"></slot>
       <div ref="tags" class="multiselect__tags"
@@ -22,7 +22,8 @@
             <slot name="tag" :option="option" :search="search" :remove="removeElement">
               <span class="multiselect__tag">
                 <span v-text="getOptionLabel(option)"></span>
-                <i aria-hidden="true" tabindex="1" @keydown.enter.prevent="removeElement(option)"  @mousedown.prevent="removeElement(option)" class="multiselect__tag-icon"></i>
+                <i aria-hidden="true" tabindex="1" @keydown.enter.prevent="removeElement(option)"
+                   @mousedown.prevent="removeElement(option)" class="multiselect__tag-icon"></i>
               </span>
             </slot>
           </template>
@@ -60,8 +61,7 @@
           class="multiselect__input"/>
         <span
           v-if="isSingleLabelVisible"
-          class="multiselect__single"
-          @mousedown.prevent="toggle">
+          class="multiselect__single">
           <slot name="singleLabel" :option="singleValue">
             <template>{{ currentOptionLabel }}</template>
           </slot>

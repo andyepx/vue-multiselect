@@ -623,7 +623,10 @@ export default {
           this.lastKeyTimeout = setTimeout(() => {
             clearTimeout(this.lastKeyTimeout)
             const keyIndex = this.filteredOptions.findIndex((x, i) => {
-              return x[this.label].toLowerCase().indexOf(this.pressedKeys.join('').toLowerCase()) === 0
+              const firstLetter = x[this.label].toLowerCase().indexOf(this.pressedKeys.join('').toLowerCase()) === 0
+              const firstNonNumeric = x[this.label].match('[a-zA-Z].*')
+              const itemInitial = (firstNonNumeric ? firstNonNumeric[0] : '').toLowerCase().indexOf(this.pressedKeys.join('').toLowerCase()) === 0
+              return firstLetter || itemInitial
             })
             this.select(this.filteredOptions[keyIndex])
             this.pressedKeys = []
