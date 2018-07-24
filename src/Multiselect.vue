@@ -1,6 +1,8 @@
 <template>
   <div
     :tabindex="searchable ? -1 : tabindex"
+    role="button"
+    :accesskey="accesskey"
     :class="{ 'multiselect--active': isOpen, 'multiselect--disabled': disabled, 'multiselect--above': isAbove }"
     @focus="activate()"
     @blur="searchable ? false : deactivate()"
@@ -285,6 +287,10 @@
       tabindex: {
         type: Number,
         default: 0
+      },
+      accesskey: {
+        type: String,
+        default: ''
       },
       showClearButton: {
         type: Boolean,
