@@ -10,12 +10,12 @@
     @keyup.esc="deactivate()"
     @keydown="alphanumSelectItem($event)"
     :id="searchable ? '' : id"
+    ref="multiselect"
     class="multiselect">
+      <button :accesskey="accesskey" @click.prevent.stop="$refs['multiselect'].focus()"
+              style="position: absolute; width: 0; height: 0; display: none;"></button>
       <slot name="caret" :toggle="toggle">
-        <div @mousedown.prevent.stop="toggle"
-             role="button"
-             :accesskey="accesskey"
-             class="multiselect__select"></div>
+        <div @mousedown.prevent.stop="toggle" class="multiselect__select"></div>
       </slot>
       <slot name="clear" :search="search"></slot>
       <div ref="tags" class="multiselect__tags"
