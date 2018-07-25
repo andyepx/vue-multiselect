@@ -1,8 +1,6 @@
 <template>
   <div
     :tabindex="searchable ? -1 : tabindex"
-    role="button"
-    :accesskey="accesskey"
     :class="{ 'multiselect--active': isOpen, 'multiselect--disabled': disabled, 'multiselect--above': isAbove }"
     @focus="activate()"
     @blur="searchable ? false : deactivate()"
@@ -14,7 +12,10 @@
     :id="searchable ? '' : id"
     class="multiselect">
       <slot name="caret" :toggle="toggle">
-        <div @mousedown.prevent.stop="toggle" class="multiselect__select"></div>
+        <div @mousedown.prevent.stop="toggle"
+             role="button"
+             :accesskey="accesskey"
+             class="multiselect__select"></div>
       </slot>
       <slot name="clear" :search="search"></slot>
       <div ref="tags" class="multiselect__tags"
