@@ -13,7 +13,7 @@
     ref="multiselect"
     class="multiselect">
       <button :accesskey="accesskey" tabindex="-1" @click.prevent.stop="$refs['multiselect'].focus()"
-              style="position: absolute; width: 0; height: 0; display: none;"></button>
+              style="display: none;" type="button"></button>
       <slot name="caret" :toggle="toggle">
         <div @mousedown.prevent.stop="toggle" class="multiselect__select"></div>
       </slot>
