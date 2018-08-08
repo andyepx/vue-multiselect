@@ -72,7 +72,7 @@
         <span
           v-if="isPlaceholderVisible"
           class="multiselect__placeholder"
-          @mousedown.prevent="toggle">
+          @mousedown.prevent.stop="toggle">
           <slot name="placeholder">
               {{ placeholder }}
           </slot>
