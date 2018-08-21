@@ -6,7 +6,8 @@
     @blur="searchable ? false : deactivate()"
     @keydown.self.down.prevent="pointerForward()"
     @keydown.self.up.prevent="pointerBackward()"
-    @keydown.enter.tab.stop.self="addPointerElement($event)"
+    @keydown.enter.space.tab.stop.self="addPointerElement($event)"
+    @keydown.space.prevent
     @keyup.esc="deactivate()"
     @keydown="alphanumSelectItem($event)"
     :id="searchable ? '' : id"
