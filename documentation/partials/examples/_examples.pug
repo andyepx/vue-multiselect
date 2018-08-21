@@ -112,6 +112,12 @@
       #### Optional configuration flags:
       - `:reset-after="true"` – Resets the internal value after each select action inside the component.
     +example('ActionDispatcher')
+  +subsection('Trigger with events')
+    :markdown-it
+      You can use multiple events to trigger selection of items in the multiselect:
+      - `multiselectSelectEvent`: selects one item given an index and an ID
+      - `multiselectExpandEvent`: focuses and expands the dropdown
+    +example('InEvents')
   +subsection('Custom configuration')
     :markdown-it
       Shows error when touched, but nothing is selected.

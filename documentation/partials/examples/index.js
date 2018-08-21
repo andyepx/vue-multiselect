@@ -9,6 +9,7 @@ import VuexActions from './VuexActions'
 import CustomConfig from './CustomConfig'
 import Groups from './Groups'
 import ActionDispatcher from './ActionDispatcher'
+import InEvents from './InEvents'
 import Alphanumeric from './Alphanumeric'
 import ClearSelectionButton from './ClearSelectionButton'
 
@@ -24,6 +25,7 @@ export {
   CustomConfig,
   Groups,
   ActionDispatcher,
+  InEvents,
   Alphanumeric,
   ClearSelectionButton,
 }
