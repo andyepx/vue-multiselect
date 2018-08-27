@@ -625,9 +625,9 @@ export default {
     alphanumSelectItem (event) {
       if (!this.taggable && this.enableAlphanumericSelection) {
         const alphanum = new RegExp('^[a-zA-Z0-9]+$')
-        const key = String.fromCharCode(!event.charCode ? event.which : event.charCode)
-        if (alphanum.test(key)) {
-          this.pressedKeys.push(key)
+        // const key = String.fromCharCode(!event.charCode ? event.which : event.charCode)
+        if (alphanum.test(event.key)) {
+          this.pressedKeys.push(event.key)
           event.preventDefault()
           event.stopPropagation()
           clearTimeout(this.lastKeyTimeout)
@@ -639,8 +639,12 @@ export default {
               const itemInitial = (firstNonNumeric ? firstNonNumeric[0] : '').toLowerCase().indexOf(this.pressedKeys.join('').toLowerCase()) === 0
               return firstLetter || itemInitial
             })
-            this.select(this.filteredOptions[keyIndex])
-            this.pressedKeys = []
+            if (keyIndex === -1) {
+              this.pressedKeys = []
+            } else {
+              this.select(this.filteredOptions[keyIndex])
+              this.pressedKeys = []
+            }
           }, 170)
         }
       }
