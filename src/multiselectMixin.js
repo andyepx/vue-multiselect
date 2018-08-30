@@ -623,6 +623,9 @@ export default {
      * @param  {type} event the keypress event
      */
     alphanumSelectItem (event) {
+      if (event.altKey || event.shiftKey || event.ctrlKey || event.key === 'Tab' || event.key === ' ') {
+        return
+      }
       if (!this.taggable && this.enableAlphanumericSelection) {
         const alphanum = new RegExp('^[a-zA-Z0-9]+$')
         // const key = String.fromCharCode(!event.charCode ? event.which : event.charCode)
