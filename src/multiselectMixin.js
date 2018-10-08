@@ -716,9 +716,13 @@ export default {
       /* istanbul ignore else  */
       if (this.searchable) {
         if (!this.preserveSearch) this.search = ''
-        this.$nextTick(() => this.$refs.search.focus())
+        this.$nextTick(() => {
+          this.$refs.search.focus()
+          this.$el.classList.add('search-focus')
+        })
       } else {
         this.$el.focus()
+        this.$el.classList.remove('search-focus')
       }
       if (this.openOnFocus || forceOpen) this.$emit('open', this.id)
     },
