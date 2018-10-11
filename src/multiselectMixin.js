@@ -732,14 +732,13 @@ export default {
      */
     deactivate () {
       /* istanbul ignore else */
-      if (!this.isOpen) return
-
       if (this.searchable) {
         this.$nextTick(() => {
           this.$el.classList.remove('search-focus')
         })
-        return
       }
+
+      if (!this.isOpen) return
 
       this.isOpen = false
       /* istanbul ignore else  */
