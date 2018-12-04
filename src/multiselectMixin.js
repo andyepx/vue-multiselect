@@ -335,6 +335,15 @@ export default {
     enableAlphanumericSelection: {
       type: Boolean,
       default: false
+    },
+    /**
+     * Allow selecting items using their index
+     * @default false
+     * @type {Boolean}
+    */
+    enableIndexSelection: {
+      type: Boolean,
+      default: false
     }
   },
   mounted () {
@@ -628,9 +637,26 @@ export default {
       if (event.altKey || event.shiftKey || event.ctrlKey || event.key === 'Tab' || event.key === ' ') {
         return
       }
-      if (!this.taggable && this.enableAlphanumericSelection) {
-        const alphanum = new RegExp('^[a-zA-Z0-9]+$')
+      const alphanum = new RegExp('^[0-9]+$')
+      const isNumber = alphanum.test(event.key)
+      if (!this.taggable && isNumber && this.enableIndexSelection) {
         // const key = String.fromCharCode(!event.charCode ? event.which : event.charCode)
+        this.pressedKeys.push(event.key)
+        event.preventDefault()
+        event.stopPropagation()
+        clearTimeout(this.lastKeyTimeout)
+        this.lastKeyTimeout = setTimeout(() => {
+          clearTimeout(this.lastKeyTimeout)
+          const option = this.filteredOptions[Number(event.key) - 1]
+          if (!option) {
+            this.pressedKeys = []
+          } else {
+            this.select(option)
+            this.pressedKeys = []
+          }
+        }, 170)
+      } else if (!this.taggable && this.enableAlphanumericSelection) {
+        const alphanum = new RegExp('^[a-zA-Z0-9]+$')
         if (alphanum.test(event.key)) {
           this.pressedKeys.push(event.key)
           event.preventDefault()
