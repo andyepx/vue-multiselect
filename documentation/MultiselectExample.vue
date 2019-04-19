@@ -8,6 +8,7 @@ div
     :options="badges",
     :multiple="true",
     :show-labels="false",
+    :allow-space="true",
     :limit="3",
     :open-on-focus="false"
     @tag="onTagging"

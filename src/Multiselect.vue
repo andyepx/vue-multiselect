@@ -7,7 +7,7 @@
     @keydown.self.down.prevent="pointerForward()"
     @keydown.self.up.prevent="pointerBackward()"
     @keydown.enter.space.tab.stop.self="addPointerElement($event)"
-    @keydown.space.prevent
+    @keydown.space="preventSpace($event)"
     @keyup.esc="deactivate()"
     @keydown="alphanumSelectItem($event)"
     :id="searchable ? '' : id"

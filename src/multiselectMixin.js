@@ -344,6 +344,15 @@ export default {
     enableIndexSelection: {
       type: Boolean,
       default: false
+    },
+    /**
+     * Allow use space in input - if false, space is used to select items
+     * @default false
+     * @type {Boolean}
+    */
+    allowSpace: {
+      type: Boolean,
+      default: false
     }
   },
   mounted () {
@@ -629,9 +638,19 @@ export default {
       return group[this.groupValues].every(this.isSelected)
     },
     /**
+     * Prevent space only if we don't want to support it
+     *
+     * @param  {KeyboardEvent} event the keypress event
+     */
+    preventSpace (event) {
+      if (this.allowSpace !== true) {
+        event.preventDefault()
+      }
+    },
+    /**
      * Selects an item that starts with the pressed alphanumeric key
      *
-     * @param  {type} event the keypress event
+     * @param  {KeyboardEvent} event the keypress event
      */
     alphanumSelectItem (event) {
       if (event.altKey || event.shiftKey || event.ctrlKey || event.key === 'Tab' || event.key === ' ') {
