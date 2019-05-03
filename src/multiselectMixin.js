@@ -69,7 +69,8 @@ export default {
       prefferedOpenDirection: 'below',
       optimizedHeight: this.maxHeight,
       pressedKeys: [],
-      lastKeyTimeout: 0
+      lastKeyTimeout: 0,
+      changedSinceLastSearch: false
     }
   },
   props: {
@@ -453,11 +454,12 @@ export default {
       /* istanbul ignore else */
       if (this.resetAfter && this.internalValue.length) {
         this.search = ''
-        this.$emit('input', this.multiple ? [] : null)
+        this.emitInput(this.multiple ? [] : null)
       }
     },
     search () {
       this.$emit('search-change', this.search, this.id)
+      this.changedSinceLastSearch = false
     }
   },
   methods: {
@@ -589,9 +591,9 @@ export default {
         this.$emit('select', option, this.id)
 
         if (this.multiple) {
-          this.$emit('input', this.internalValue.concat([option]), this.id)
+          this.emitInput(this.internalValue.concat([option]))
         } else {
-          this.$emit('input', option, this.id)
+          this.emitInput(option)
         }
 
         /* istanbul ignore else */
@@ -626,7 +628,7 @@ export default {
           option => group[this.groupValues].indexOf(option) === -1
         )
 
-        this.$emit('input', newValue, this.id)
+        this.emitInput(newValue)
       } else {
         const optionsToAdd = group[this.groupValues].filter(not(this.isSelected))
 
@@ -732,9 +734,9 @@ export default {
       this.$emit('remove', option, this.id)
       if (this.multiple) {
         const newValue = this.internalValue.slice(0, index).concat(this.internalValue.slice(index + 1))
-        this.$emit('input', newValue, this.id)
+        this.emitInput(newValue)
       } else {
-        this.$emit('input', null, this.id)
+        this.emitInput(null)
       }
 
       /* istanbul ignore else */
@@ -804,7 +806,7 @@ export default {
         this.$el.blur()
       }
       const search = (this.search || '').trim()
-      if (this.addSearchOnBlur && search) this.select({isTag: true, label: search})
+      if (this.addSearchOnBlur && !this.changedSinceLastSearch && search) this.select({isTag: true, label: search})
       if (!this.preserveSearch || this.addSearchOnBlur) this.search = ''
       this.$emit('close', this.getValue(), this.id)
     },
@@ -838,6 +840,15 @@ export default {
         this.prefferedOpenDirection = 'above'
         this.optimizedHeight = Math.min(spaceAbove - 40, this.maxHeight)
       }
+    },
+    /**
+     * Emits input event.
+     *
+     * @value the value to emit
+     */
+    emitInput (value, id) {
+      this.changedSinceLastSearch = true
+      this.$emit('input', value, this.id)
     }
   }
 }

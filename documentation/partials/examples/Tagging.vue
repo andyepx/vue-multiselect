@@ -9,6 +9,8 @@ div
     track-by="code",
     :options="options",
     :multiple="true",
+    :clear-on-select="false",
+    :close-on-select="false",
     :taggable="true",
     :add-search-on-blur="true",
     @tag="addTag"
