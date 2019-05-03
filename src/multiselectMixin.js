@@ -353,6 +353,15 @@ export default {
     allowSpace: {
       type: Boolean,
       default: false
+    },
+    /**
+     * Allow selecting the current search term on blur without having to click or press enter
+     * @default false
+     * @type {Boolean}
+     */
+    addSearchOnBlur: {
+      type: Boolean,
+      default: false
     }
   },
   mounted () {
@@ -794,7 +803,9 @@ export default {
       } else {
         this.$el.blur()
       }
-      if (!this.preserveSearch) this.search = ''
+      const search = (this.search || '').trim()
+      if (this.addSearchOnBlur && search) this.select({isTag: true, label: search})
+      if (!this.preserveSearch || this.addSearchOnBlur) this.search = ''
       this.$emit('close', this.getValue(), this.id)
     },
     /**

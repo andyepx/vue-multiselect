@@ -10,6 +10,7 @@ div
     :options="options",
     :multiple="true",
     :taggable="true",
+    :add-search-on-blur="true",
     @tag="addTag"
   )
   pre.language-json
