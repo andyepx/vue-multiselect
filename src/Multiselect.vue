@@ -106,6 +106,7 @@
                   :class="optionHighlight(index, option)"
                   @click.stop="select(option)"
                   @mouseenter.self="pointerSet(index)"
+                  @mouseleave.self="pointerSet(null)"
                   :data-select="option && option.isTag ? tagPlaceholder : selectLabelText"
                   :data-selected="selectedLabelText"
                   :data-deselect="deselectLabelText"
@@ -120,6 +121,7 @@
                   :data-deselect="groupSelect && deselectGroupLabelText"
                   :class="groupHighlight(index, option)"
                   @mouseenter.self="groupSelect && pointerSet(index)"
+                  @mouseleave.self="pointerSet(null)"
                   @mousedown.prevent="selectGroup(option)"
                   class="multiselect__option">
                     <slot name="option" :option="option" :search="search">

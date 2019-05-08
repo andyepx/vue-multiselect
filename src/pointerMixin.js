@@ -2,7 +2,8 @@ export default {
   data () {
     return {
       pointer: 0,
-      pointerDirty: false
+      pointerDirty: false,
+      hover: null
     }
   },
   props: {
@@ -39,7 +40,7 @@ export default {
   methods: {
     optionHighlight (index, option) {
       return {
-        'multiselect__option--highlight': index === this.pointer,
+        'multiselect__option--highlight': index === this.hover || index === this.pointer,
         'multiselect__option--selected': this.isSelected(option)
       }
     },
@@ -54,7 +55,7 @@ export default {
 
       return [
         this.groupSelect ? 'multiselect__option--group' : 'multiselect__option--disabled',
-        { 'multiselect__option--highlight': index === this.pointer },
+        { 'multiselect__option--highlight': index === this.hover || index === this.pointer },
         { 'multiselect__option--group-selected': this.wholeGroupSelected(group) }
       ]
     },
@@ -115,6 +116,7 @@ export default {
     },
     pointerReset () {
       this.pointer = 0
+      this.hover = null
       /* istanbul ignore else */
       if (this.$refs.list) {
         this.$refs.list.scrollTop = 0
@@ -128,6 +130,13 @@ export default {
           : 0
       }
 
+      /* istanbul ignore else */
+      if (this.hover >= this.filteredOptions.length - 1) {
+        this.hover = this.filteredOptions.length
+          ? this.filteredOptions.length - 1
+          : 0
+      }
+
       if (this.filteredOptions.length > 0 &&
         this.filteredOptions[this.pointer].$isLabel &&
         !this.groupSelect
@@ -136,10 +145,12 @@ export default {
       }
     },
     pointerSet (index) {
+      this.hover = index
+
       /* istanbul ignore else */
       if (!this.showPointer) return
 
-      this.pointer = index
+      this.pointer = index || 0
       this.pointerDirty = true
     }
   }
