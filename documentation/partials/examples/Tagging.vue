@@ -12,6 +12,7 @@ div
     :clear-on-select="false",
     :close-on-select="false",
     :taggable="true",
+    :show-pointer="false",
     :add-search-on-blur="true",
     @tag="addTag"
   )

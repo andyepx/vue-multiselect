@@ -39,7 +39,7 @@ export default {
   methods: {
     optionHighlight (index, option) {
       return {
-        'multiselect__option--highlight': index === this.pointer && this.showPointer,
+        'multiselect__option--highlight': index === this.pointer,
         'multiselect__option--selected': this.isSelected(option)
       }
     },
@@ -54,7 +54,7 @@ export default {
 
       return [
         this.groupSelect ? 'multiselect__option--group' : 'multiselect__option--disabled',
-        { 'multiselect__option--highlight': index === this.pointer && this.showPointer },
+        { 'multiselect__option--highlight': index === this.pointer },
         { 'multiselect__option--group-selected': this.wholeGroupSelected(group) }
       ]
     },
@@ -63,7 +63,9 @@ export default {
       if (this.filteredOptions.length > 0) {
         this.select(this.filteredOptions[this.pointer], key)
       }
-      this.pointerReset()
+
+      /* istanbul ignore else */
+      if (this.closeOnSelect) this.pointerReset()
     },
     pointerForward () {
       const wasOpened = this.isOpen
@@ -112,8 +114,6 @@ export default {
       this.pointerDirty = true
     },
     pointerReset () {
-      /* istanbul ignore else */
-      if (!this.closeOnSelect) return
       this.pointer = 0
       /* istanbul ignore else */
       if (this.$refs.list) {
@@ -136,6 +136,9 @@ export default {
       }
     },
     pointerSet (index) {
+      /* istanbul ignore else */
+      if (!this.showPointer) return
+
       this.pointer = index
       this.pointerDirty = true
     }

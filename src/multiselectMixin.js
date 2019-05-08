@@ -459,6 +459,7 @@ export default {
     },
     search () {
       this.$emit('search-change', this.search, this.id)
+      this.pointerReset()
       this.changedSinceLastSearch = false
     }
   },
