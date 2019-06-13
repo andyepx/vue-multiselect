@@ -326,7 +326,7 @@ export default {
     */
     openOnFocus: {
       type: Boolean,
-      default: true
+      default: false
     },
     /**
      * Allow selecting items using alpha-numeric keys on keyboard
