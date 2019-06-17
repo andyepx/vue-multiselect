@@ -54,6 +54,7 @@
           :value="search"
           :disabled="disabled"
           :tabindex="tabindex"
+          :aria-describedby="searchInstructions"
           @input="updateSearch($event.target.value)"
           @focus.prevent="activate()"
           @blur.prevent="deactivate()"
@@ -163,7 +164,7 @@
        */
       name: {
         type: String,
-        default: ''
+        default: undefined
       },
       /**
        * String to show when pointing to an option
@@ -303,6 +304,10 @@
       clearButtonLabel: {
         type: String,
         default: 'Clear'
+      },
+      searchInstructions: {
+        type: String,
+        default: undefined
       }
     },
     computed: {
