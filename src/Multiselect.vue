@@ -98,7 +98,7 @@
         <ul :id="`${id}-listbox`"
             class="multiselect__content"
             role="listbox"
-            :aria-label="placeholder"
+            :aria-labelledby="ariaLabelledby"
             :style="contentStyle">
           <slot name="beforeList"></slot>
 
@@ -336,6 +336,10 @@
       clearButtonLabel: {
         type: String,
         default: 'Clear'
+      },
+      ariaLabelledby: {
+        type: String,
+        default: undefined
       },
       searchInstructions: {
         type: String,
