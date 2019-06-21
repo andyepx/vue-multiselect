@@ -47,6 +47,7 @@
         </slot>
       </transition>
       <input
+        class="multiselect__input"
         ref="search"
         v-if="searchable"
         :name="name"
@@ -70,7 +71,7 @@
         @keydown.up.prevent="pointerBackward()"
         @keydown.enter.prevent.stop.self="addPointerElement($event)"
         @keydown.delete.stop="removeLastElement()"
-        class="multiselect__input"/>
+        @mousedown.stop/>
       <span
         v-if="isSingleLabelVisible"
         class="multiselect__single">
