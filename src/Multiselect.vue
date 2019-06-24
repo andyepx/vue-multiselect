@@ -23,7 +23,7 @@
          role="combobox"
          aria-haspopup="listbox"
          :aria-owns="`${id}-listbox`"
-         :aria-expanded="isOpen"
+         :aria-expanded="isOpen ? 'true' : 'false'"
          @mousedown.prevent="toggle">
       <div class="multiselect__tags-wrap" v-show="visibleValues.length > 0">
         <template v-for="option of visibleValues" @mousedown.prevent>
