@@ -789,7 +789,7 @@ export default {
      * Closes the multiselect’s dropdown.
      * Sets this.isOpen to FALSE
      */
-    deactivate () {
+    deactivate (blur = true) {
       /* istanbul ignore else */
       if (this.searchable) {
         this.$nextTick(() => {
@@ -801,7 +801,9 @@ export default {
 
       this.isOpen = false
       /* istanbul ignore else  */
-      if (this.searchable) {
+      if (!blur) {
+        this.$el.focus()
+      } else if (this.searchable) {
         this.$refs.search.blur()
       } else {
         this.$el.blur()

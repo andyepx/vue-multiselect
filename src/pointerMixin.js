@@ -59,24 +59,41 @@ export default {
         { 'multiselect__option--group-selected': this.wholeGroupSelected(group) }
       ]
     },
-    addPointerElement ({ key } = 'Enter') {
+    addPointerElement (event = {key: 'Enter'}) {
+      if (!this.isOpen && event.key === 'Enter') {
+        this.activate(true)
+        return
+      }
+
       /* istanbul ignore else */
       if (this.filteredOptions.length > 0) {
-        this.select(this.filteredOptions[this.pointer], key)
+        this.select(this.filteredOptions[this.pointer], event.key)
       }
 
       /* istanbul ignore else */
       if (this.closeOnSelect) this.pointerReset()
     },
-    pointerForward () {
+    pointerForward (target = null) {
       const wasOpened = this.isOpen
       if (!this.openOnFocus && !this.isOpen) this.activate(true)
 
+      const newPointer = (
+        target === 'first'
+          ? 0
+          : (
+            target === 'last'
+              ? this.filteredOptions.length - 1
+              : this.pointer + 1
+          )
+      )
+
       /* istanbul ignore else */
-      if (this.pointer < this.filteredOptions.length - 1) {
-        if (wasOpened) this.pointer++
+      if (newPointer < this.filteredOptions.length) {
+        if (wasOpened) this.pointer = newPointer
         /* istanbul ignore next */
-        if (this.$refs.list.scrollTop <= this.pointerPosition - (this.visibleElements - 1) * this.optionHeight) {
+        if (target === 'first') {
+          this.$refs.list.scrollTop = 0
+        } else if (this.$refs.list.scrollTop <= this.pointerPosition - (this.visibleElements - 1) * this.optionHeight) {
           this.$refs.list.scrollTop = this.pointerPosition - (this.visibleElements - 1) * this.optionHeight
         }
         /* istanbul ignore else */

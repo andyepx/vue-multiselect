@@ -6,9 +6,11 @@
     @blur="searchable ? false : deactivate()"
     @keydown.self.down.prevent="pointerForward()"
     @keydown.self.up.prevent="pointerBackward()"
+    @keydown.self.home.prevent="pointerForward('first')"
+    @keydown.self.end.prevent="pointerForward('last')"
     @keydown.enter.space.tab.stop.self="addPointerElement($event)"
     @keydown.space="preventSpace($event)"
-    @keyup.esc="deactivate()"
+    @keyup.esc="deactivate(false)"
     @keydown="alphanumSelectItem($event)"
     :id="searchable ? '' : id"
     ref="multiselect"
@@ -65,10 +67,12 @@
         :aria-describedby="searchInstructions"
         @input="updateSearch($event.target.value)"
         @focus.prevent="activate()"
-        @blur.prevent="deactivate()"
-        @keyup.esc="deactivate()"
+        @blur.prevent="deactivate(false)"
+        @keyup.esc.stop="deactivate(false)"
         @keydown.down.prevent="pointerForward()"
         @keydown.up.prevent="pointerBackward()"
+        @keydown.home.stop.prevent="pointerForward('first')"
+        @keydown.end.stop.prevent="pointerForward('last')"
         @keydown.enter.prevent.stop.self="addPointerElement($event)"
         @keydown.delete.stop="removeLastElement()"
         @mousedown.stop/>
@@ -495,6 +499,10 @@
 
   .multiselect:focus {
     outline: none;
+  }
+
+  .multiselect:focus-within .multiselect__tags {
+    border-color: #35495e;
   }
 
   .multiselect--disabled {
