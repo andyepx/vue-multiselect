@@ -789,7 +789,7 @@ export default {
      * Closes the multiselect’s dropdown.
      * Sets this.isOpen to FALSE
      */
-    deactivate (blur = true, event = null) {
+    deactivate (event = null) {
       /* istanbul ignore else */
       if (this.searchable) {
         this.$nextTick(() => {
@@ -800,21 +800,15 @@ export default {
       if (!this.isOpen) return
 
       this.isOpen = false
-      /* istanbul ignore else  */
-      if (!blur) {
-        this.$el.focus()
-        if (event) {
-          event.stopPropagation()
-        }
-      } else if (this.searchable) {
-        this.$refs.search.blur()
-      } else {
-        this.$el.blur()
-      }
+      this.$el.focus()
       const search = (this.search || '').trim()
       if (this.addSearchOnBlur && !this.changedSinceLastSearch && search) this.select({isTag: true, label: search})
       if (!this.preserveSearch || this.addSearchOnBlur) this.search = ''
       this.$emit('close', this.getValue(), this.id)
+
+      if (event) {
+        event.stopPropagation()
+      }
     },
     /**
      * Call this.activate() or this.deactivate()
